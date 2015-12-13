@@ -133,6 +133,37 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($config->isEnabledFor($this->userMock));
     }
 
+    public function testEnabledFeatureOnlyForSomeUser()
+    {
+        $this->userMock->method('getId')->willReturn(1);
+        $this->worldMock->method('userName')->withAnyParameters()->willReturn('bob');
+
+        $config = new Config(
+            'my_feature',
+            ['users' => ['bob', 'alice', 'joe']],
+            $this->worldMock
+        );
+
+        $this->assertTrue($config->isEnabledFor($this->userMock));
+    }
+
+    public function testEnabledFeatureVariantOnlyForSomeUser()
+    {
+        $this->userMock->method('getId')->willReturn(1);
+        $this->worldMock->method('userName')->withAnyParameters()->willReturn('alice');
+
+        $config = new Config(
+            'my_feature',
+            [
+                'enabled' => ['feature1' => 100],
+                'users' => ['feature1' => ['bob', 'alice']]
+            ],
+            $this->worldMock
+        );
+
+        $this->assertEquals($config->variantFor($this->userMock), 'feature1');
+    }
+
     public function testDisabledFeatureForCertainUser()
     {
         $this->userMock->method('getId')->willReturn(1);
@@ -145,5 +176,54 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertFalse($config->isEnabledFor($this->userMock));
+    }
+
+    public function testEnabledFeatureForSpecificGroup()
+    {
+        $this->userMock->method('getId')->willReturn(1);
+        $this->worldMock->method('inGroup')->willReturn(true);
+        $config = new Config(
+            'my_feature',
+            ['groups' => 1],
+            $this->worldMock
+        );
+
+        $this->assertTrue($config->isEnabledFor($this->userMock));
+    }
+
+    public function testDisabledFeatureForSpecificGroup()
+    {
+        $this->userMock->method('getId')->willReturn(1);
+        $this->worldMock->method('inGroup')->willReturn(false);
+        $config = new Config(
+            'my_feature',
+            ['groups' => 1],
+            $this->worldMock
+        );
+
+        $this->assertFalse($config->isEnabledFor($this->userMock));
+    }
+
+    public function testConfigDescription()
+    {
+        $config = new Config(
+            'my_feature',
+            ['enabled' => 'on', 'description' => 'feature'],
+            $this->worldMock
+        );
+
+        $this->assertEquals($config->description(), 'feature');
+    }
+
+    public function testDisabledInternalFeature()
+    {
+        $this->worldMock->method('isInternalRequest')->willReturn(false);
+        $config = new Config(
+            'my_feature',
+            ['internal' => 'on'],
+            $this->worldMock
+        );
+
+        $this->assertFalse($config->isEnabled());
     }
 }
