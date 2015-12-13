@@ -258,11 +258,11 @@ class Config
                 $uaid = $this->world->uaid();
                 return $uaid ? $uaid : "no uaid";
             case self::USER:
-                $userID = $this->world->userId();
+                $userId = $this->world->userId();
                 // Not clear if this is right. There's an argument to be
-                // made that if we're bucketing by userID and the user is
+                // made that if we're bucketing by userId and the user is
                 // not logged in we should treat the feature as disabled.
-                return !is_null($userID) ? $userID : $this->world->uaid();
+                return !is_null($userId) ? $userId : $this->world->uaid();
             default:
                 throw new \InvalidArgumentException("Bad bucketing: $this->bucketing");
         }
@@ -318,11 +318,11 @@ class Config
      * practice we could make the configuration more complex. Or you
      * can just provide a specific variant via the 'users' property.
      */
-    private function variantForGroup($userID)
+    private function variantForGroup($userId)
     {
-        if ($userID) {
-            foreach ($this->groups as $groupID => $variant) {
-                if ($this->world->inGroup($userID, $groupID)) {
+        if ($userId) {
+            foreach ($this->groups as $groupId => $variant) {
+                if ($this->world->inGroup($userId, $groupId)) {
                     return array($variant, 'g');
                 }
             }
@@ -334,10 +334,10 @@ class Config
      * What variant, if any, should we return if the current user is
      * an admin.
      */
-    private function variantForAdmin($userID)
+    private function variantForAdmin($userId)
     {
-        if ($userID && $this->adminVariant) {
-            if ($this->world->isAdmin($userID)) {
+        if ($userId && $this->adminVariant) {
+            if ($this->world->isAdmin($userId)) {
                 return array($this->adminVariant, 'a');
             }
         }
