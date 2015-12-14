@@ -1,0 +1,22 @@
+language: php
+
+php:
+  - 5.6
+
+sudo: false
+
+env:
+  - COMPOSER_OPTS=""
+
+matrix:
+  fast_finish: true
+
+install:
+  - travis_retry composer update
+
+script:
+  - php vendor/bin/phpunit
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --access-token="af709c3ff1eaa66202cee9023b96ae55c2e4df094708c095cd945c761870be8c" --format=php-clover build/logs/clover.xml
