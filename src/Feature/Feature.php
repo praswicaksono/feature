@@ -41,6 +41,11 @@ final class Feature
         $this->stanza = $stanza;
     }
 
+    /**
+     * @param World $world
+     * @param array $stanza
+     * @return Feature
+     */
     public static function create(World $world, array $stanza)
     {
         if (static::$instance) {
