@@ -1,6 +1,8 @@
 Feature API
 ===
 
+[![Build Status](https://travis-ci.org/Atriedes/feature.svg?branch=master)](https://travis-ci.org/Atriedes/feature) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Atriedes/feature/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Atriedes/feature/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/Atriedes/feature/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Atriedes/feature/?branch=master)
+
 Forked version of Etsy's Feature flagging API used for operational rampups and A/B
 testing.
 

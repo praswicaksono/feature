@@ -1,6 +1,6 @@
 filter:
     paths: [src/*]
-    excluded_paths: [test/*, build/*, vendor/*]
+    excluded_paths: [tests/*, build/*, vendor/*]
 checks:
   php:
     code_rating: true
@@ -21,7 +21,7 @@ tools:
   external_code_coverage:
     timeout: 36000
     runs: 3
-  php_code_coverage: false
+  php_code_coverage: true
   php_code_sniffer:
     config:
       standard: PSR2
@@ -29,5 +29,5 @@ tools:
       paths: ['src']
   php_loc:
     enabled: true
-    excluded_dirs: [vendor, spec, stub]
+    excluded_dirs: [vendor, build, tests]
   php_sim: false
