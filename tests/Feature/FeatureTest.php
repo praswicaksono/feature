@@ -1,6 +1,7 @@
 <?php
 
 namespace Test\Feature;
+
 use Feature\Contracts\User;
 use Feature\Contracts\World;
 use Feature\Feature;
