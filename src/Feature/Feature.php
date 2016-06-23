@@ -143,7 +143,7 @@ final class Feature
             return static::$config[$feature];
         }
 
-	$stanza_config = isset(static::$instance->stanza[$feature]) ? static::$instance->stanza[$feature] : 'off';
+	$stanza_config = isset(static::$instance->stanza[$feature]) ? static::$instance->stanza[$feature] : Config::OFF;
         
         static::$config[$feature] = new Config(
             $feature,
