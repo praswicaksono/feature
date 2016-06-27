@@ -226,4 +226,15 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($config->isEnabled());
     }
+    
+    public function testDefaultToOffConfig()
+    {
+        $config = new Config(
+            '',
+            [],
+            $this->worldMock
+        );
+        
+        $this->assertFalse($config->isEnabled());
+    }
 }
