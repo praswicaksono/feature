@@ -39,10 +39,17 @@ class FeatureTest extends \PHPUnit_Framework_TestCase
 
     public function testEnabledFeatureVariant()
     {
-        Feature::clear();
+        Feature::clear(); 
         Feature::create($this->worldMock, ['feature' => 'variant']);
 
         $this->assertTrue(Feature::isEnabled('feature'));
         $this->assertEquals(Feature::variant('feature'), 'variant');
+    }
+    
+    public function testDefaultToOffFeature()
+    {
+        Feature::clear();
+        Feature::create($this->worldMock, []);
+        $this->assertFalse(Feature::isEnabled('feature'));
     }
 }
